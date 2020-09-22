@@ -15,6 +15,20 @@ type JsonLinGroupPermission struct {
 	Mount int
 }
 
+func AddLinGroupPermission(groupID int, permissionID int) bool {
+
+	result := db.Create(&LinGroupPermission{
+		GroupId: groupID,
+		PermissionId: permissionID,
+	})
+
+	if result.Error != nil {
+		panic(result.Error)
+	}
+
+	return true
+}
+
 func GetLinGroupPermissionByGroupId(groupID int) (permissions []JsonLinGroupPermission)  {
 	db.Model(&LinGroupPermission{}).Select("lin_group_permission.id,lin_permission.name,lin_permission.module,lin_permission.mount").Where("group_id = ?", groupID).Joins("left join lin_permission on lin_permission.id = lin_group_permission.permission_id").Find(&permissions)
 	return

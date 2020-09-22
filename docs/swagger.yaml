@@ -1,0 +1,522 @@
+info:
+  contact: {}
+  license: {}
+paths:
+  /cms/admin/all:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 查询所有权限组
+      tags:
+      - 管理员
+  /cms/admin/group:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{"access_token":"...","refresh_token":"..."},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 查询所有权限组及其权限
+      tags:
+      - 管理员
+    post:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 组名
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 备注
+        in: query
+        name: info
+        required: true
+        type: string
+      - description: 权限ID集合
+        in: query
+        name: permission_ids
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 新建权限组
+      tags:
+      - 管理员
+  /cms/admin/group/:id:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 查询一个权限组及其权限
+      tags:
+      - 管理员
+  /cms/admin/permission:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询所有可分配的权限
+      tags:
+      - 管理员
+  /cms/admin/user/:id:
+    delete:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 删除用户
+      tags:
+      - 用户
+    put:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户名
+        in: query
+        name: ID
+        required: true
+        type: string
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 昵称
+        in: query
+        name: nickname
+        required: true
+        type: string
+      - description: 邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: 头像
+        in: query
+        name: avatar
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{"access_token":"...","refresh_token":"..."},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 管理员更新用户信息
+      tags:
+      - 管理员
+  /cms/admin/user/:id/password:
+    put:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 新密码
+        in: query
+        name: new_password
+        required: true
+        type: string
+      - description: 确认密码
+        in: query
+        name: confirm_password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 修改用户密码
+      tags:
+      - 用户
+  /cms/admin/users:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询所有用户
+      tags:
+      - 管理员
+  /cms/user:
+    put:
+      parameters:
+      - description: 用户名
+        in: query
+        name: ID
+        required: true
+        type: string
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 昵称
+        in: query
+        name: nickname
+        required: true
+        type: string
+      - description: 邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: 头像
+        in: query
+        name: avatar
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{"access_token":"...","refresh_token":"..."},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 用户更新信息
+      tags:
+      - 用户
+  /cms/user/information:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询用户信息
+      tags:
+      - 用户
+  /cms/user/login:
+    post:
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"access_token":"...","refresh_token":"..."}'
+          schema:
+            type: string
+      summary: 登录
+      tags:
+      - 用户
+  /cms/user/password:
+    put:
+      parameters:
+      - description: 旧密码
+        in: query
+        name: old_password
+        required: true
+        type: string
+      - description: 新密码
+        in: query
+        name: new_password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 修改密码
+      tags:
+      - 用户
+  /cms/user/permissions:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询自己拥有的权限
+      tags:
+      - 用户
+  /cms/user/refresh:
+    get:
+      parameters:
+      - description: 刷新token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"access_token":"..."}'
+          schema:
+            type: string
+      summary: 刷新令牌
+      tags:
+      - 用户
+  /cms/user/register:
+    post:
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{"access_token":"...","refresh_token":"..."},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 用户
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 文件资源,可以写多个
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: 文件资源1,可以写多个
+        in: formData
+        name: file1
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 上传文件
+      tags:
+      - 文件管理
+  /v1/book:
+    get:
+      parameters:
+      - description: title
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 获取图书列表
+      tags:
+      - 图书
+  /v1/book/:id:
+    get:
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 获取图书信息
+      tags:
+      - 图书
+  /v1/books:
+    post:
+      parameters:
+      - description: 图书名称
+        in: query
+        name: title
+        required: true
+        type: string
+      - description: 图书作者
+        in: query
+        name: author
+        required: true
+        type: string
+      - description: 图书简介
+        in: query
+        name: summary
+        required: true
+        type: string
+      - description: 图书图片
+        in: query
+        name: image
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 新增图书
+      tags:
+      - 图书
+  /v1/books/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 删除图书
+      tags:
+      - 图书
+    put:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 图书名称
+        in: query
+        name: title
+        required: true
+        type: string
+      - description: 图书作者
+        in: query
+        name: author
+        required: true
+        type: string
+      - description: 图书简介
+        in: query
+        name: summary
+        required: true
+        type: string
+      - description: 图书图片
+        in: query
+        name: image
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 修改图书
+      tags:
+      - 图书
+swagger: "2.0"

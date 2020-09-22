@@ -319,9 +319,14 @@ func CreateGroup(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusOK,e.SUCCESS,err)
+		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
 		return
 	}
 
-	models.AddLinGroup(req.Name,req.Info,3)
+	linGourp := models.AddLinGroup(req.Name,req.Info,3)
+	for _,k := range req.PermissionIds {
+		models.AddLinGroupPermission(linGourp.ID, k)
+	}
+
+	appG.Response(http.StatusOK, nil)
 }

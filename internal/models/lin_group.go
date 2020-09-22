@@ -21,14 +21,15 @@ type LinGroupJson struct {
 	Info string `json:"info"`
 }
 
-func AddLinGroup(name string, info string, level int) bool {
-	db.Create(&LinGroup{
+func AddLinGroup(name string, info string, level int) (group LinGroup) {
+	group = LinGroup{
 		Name : name,
 		Info : info,
 		Level : level,
-	})
+	}
+	db.Create(&group)
 
-	return true
+	return
 }
 
 func GetLinGroup(pageNum int, pageSize int, maps map[string]interface{}) (users []LinGroupJson) {
