@@ -3,9 +3,9 @@ package jwt
 
 import (
 	"github.com/gin-gonic/gin"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/tools"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/tools"
 	"net/http"
 	"strings"
 	"time"
@@ -27,7 +27,7 @@ func JWT() gin.HandlerFunc {
 		} else {
 			authHeaderMap := strings.SplitN(authHeader, " ", 2)
 			if !(len(authHeaderMap) == 2 && authHeaderMap[0] == "Bearer") {
-				appG.ResponseError(http.StatusOK,e.ERROR_AUTH_TYPE,nil)
+				appG.ResponseError(http.StatusOK, e.ERROR_AUTH_TYPE,nil)
 				c.Abort()
 				return
 			}

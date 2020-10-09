@@ -10,7 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/crypto/pbkdf2"
-	"lin-cms-gin/internal/pkg/setting"
+	"lin-cms-gin/pkg/setting"
 	"math/big"
 	"strconv"
 	"strings"
@@ -83,10 +83,10 @@ func PasswordVerify(password string, encoded string) (bool, error) {
 
 // 创建 Pbkdf2_Hash256 格式的字符串
 func CreatePbkdf2Hash256(str string) (password string)  {
-	pwd := []byte(str) // 用户设置的原始密码
-	salt := []byte(setting.AppSetting.Pbkdf2Secret)  // 盐
-	iterations := 64000             // 加密算法的迭代次数，15000 次
-	digest := sha256.New            // digest 算法，使用 sha256
+	pwd := []byte(str)                              // 用户设置的原始密码
+	salt := []byte(setting.AppSetting.Pbkdf2Secret) // 盐
+	iterations := 64000                             // 加密算法的迭代次数，15000 次
+	digest := sha256.New                            // digest 算法，使用 sha256
 
 	// 第一步：使用 pbkdf2 算法加密
 	dk := pbkdf2.Key(pwd, salt, iterations, 32, digest)

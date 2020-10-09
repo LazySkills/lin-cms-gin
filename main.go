@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/logging"
-	"lin-cms-gin/internal/pkg/setting"
-	"lin-cms-gin/internal/pkg/lin"
 	"lin-cms-gin/internal/router"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/logging"
+	"lin-cms-gin/pkg/setting"
 	"net/http"
 )
 

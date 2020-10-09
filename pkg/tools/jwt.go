@@ -2,7 +2,7 @@
 package tools
 
 import (
-	"lin-cms-gin/internal/pkg/setting"
+	"lin-cms-gin/pkg/setting"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -63,8 +63,8 @@ func ParseToken(token string, isRefresh bool)(*Claims,error){
 // 根据类型获取Jwt配置
 func getJwtConfigByType(isRefresh bool) (jwtSecret []byte, expireTime time.Duration) {
 	if isRefresh {
-		return []byte(setting.JwtSetting.JwtRefreshSecret),setting.JwtSetting.JwtRefreshExpireTime
+		return []byte(setting.JwtSetting.JwtRefreshSecret), setting.JwtSetting.JwtRefreshExpireTime
 	}else {
-		return []byte(setting.JwtSetting.JwtSecret),setting.JwtSetting.JwtExpireTime
+		return []byte(setting.JwtSetting.JwtSecret), setting.JwtSetting.JwtExpireTime
 	}
 }

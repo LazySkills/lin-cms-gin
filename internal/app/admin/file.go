@@ -3,8 +3,8 @@ package admin
 
 import (
 	"github.com/gin-gonic/gin"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/upload"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/upload"
 )
 
 type LinFilePermission struct {

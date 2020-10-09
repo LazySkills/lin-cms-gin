@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"lin-cms-gin/internal/middleware/jwt"
 	"lin-cms-gin/internal/middleware/permission"
-	"lin-cms-gin/internal/pkg/lin"
+	"lin-cms-gin/pkg/lin"
 )
 
 // 权限注册蓝图

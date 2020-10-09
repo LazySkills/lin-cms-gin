@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"lin-cms-gin/internal/middleware/jwt"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/lin"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/lin"
 	"net/http"
 )
 

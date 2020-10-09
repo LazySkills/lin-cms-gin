@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/file"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/logging"
-	"lin-cms-gin/internal/pkg/setting"
-	"lin-cms-gin/internal/pkg/tools"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/file"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/logging"
+	"lin-cms-gin/pkg/setting"
+	"lin-cms-gin/pkg/tools"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -48,8 +48,8 @@ func UploadFile(c *gin.Context)  {
 			fileMd5 := tools.EncodeMD5(imageName)
 			linFile := models.GetLinFileByFileMd5(fileMd5)
 			if linFile.ID > 0 {
-				images = append(images,Image{
-					Id: linFile.ID,
+				images = append(images, Image{
+					Id:  linFile.ID,
 					Key: fileFormName,
 					Url: GetImageFullUrl(linFile.Name),
 				})
@@ -79,8 +79,8 @@ func UploadFile(c *gin.Context)  {
 							fileMd5,
 						)
 
-						images = append(images,Image{
-							Id: linFileId,
+						images = append(images, Image{
+							Id:  linFileId,
 							Key: fileFormName,
 							Url: GetImageFullUrl(imageName),
 						})
@@ -135,7 +135,7 @@ func CheckImageFormSize(c *gin.Context)  {
 	err := c.Request.ParseMultipartForm(setting.FileSetting.FileMultipartMaxSize)
 	if err != nil {
 		logging.Warn(err)
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_UPLOAD_CHECK_IMAGE_FORMAT,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_UPLOAD_CHECK_IMAGE_FORMAT,nil)
 	}
 }
 

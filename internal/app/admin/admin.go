@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
+	"lin-cms-gin/internal/dto/cms"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/setting"
-	"lin-cms-gin/internal/pkg/tools"
-	"lin-cms-gin/internal/dto/cms"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/setting"
+	"lin-cms-gin/pkg/tools"
 	"net/http"
 )
 
@@ -53,7 +53,7 @@ func GetAllPermissions(c *gin.Context)  {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"GetAllPermissions") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -83,7 +83,7 @@ func GetAdminUsers(c *gin.Context)  {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UserGetPermissions") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -129,7 +129,7 @@ func ChangeUserPassword(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"ChangeUserPassword") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -137,7 +137,7 @@ func ChangeUserPassword(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
@@ -146,7 +146,7 @@ func ChangeUserPassword(c *gin.Context) {
 		return
 	}
 
-	appG.ResponseSuccess(http.StatusOK,e.SUCCESS,nil)
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS,nil)
 }
 
 
@@ -164,7 +164,7 @@ func DeleteUser(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"DeleteUser") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -172,16 +172,16 @@ func DeleteUser(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
 	if !models.DeleteLinUser(id) {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_UPDATE_USER_FAIL,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_UPDATE_USER_FAIL,nil)
 		return
 	}
 
-	appG.ResponseSuccess(httpCode,e.SUCCESS,nil)
+	appG.ResponseSuccess(httpCode, e.SUCCESS,nil)
 }
 
 
@@ -203,7 +203,7 @@ func UpdateUser(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UpdateUser") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -211,12 +211,12 @@ func UpdateUser(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
 	if !models.UpdateUserInfo(id,req.Username,req.Nickname,req.Email,req.Avatar) {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_UPDATE_USER_FAIL,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_UPDATE_USER_FAIL,nil)
 		return
 	}
 
@@ -237,7 +237,7 @@ func GetAdminGroups(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"GetAdminGroups") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -270,7 +270,7 @@ func GetAllGroup(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"GetAllGroup") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -293,7 +293,7 @@ func GetGroup(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"GetGroup") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -320,13 +320,13 @@ func CreateGroup(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"CreateGroup") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
@@ -353,13 +353,13 @@ func UpdateGroup(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UpdateGroup") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
@@ -367,7 +367,7 @@ func UpdateGroup(c *gin.Context) {
 	if linGroup.ID > 0 {
 		linGroup.UpdateLinGroup(req.Name,req.Info)
 	}else {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_GROUP,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_NOT_EXIST_GROUP,nil)
 		return
 	}
 
@@ -389,22 +389,22 @@ func DeleteGroup(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"DeleteGroup") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
 
 	linGroup := models.GetLinGroupByID(com.StrTo(c.Param("id")).MustInt())
 	if linGroup.ID < 1 {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_GROUP,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_NOT_EXIST_GROUP,nil)
 		return
 	}
 
 	if linGroup.Level == setting.LinSetting.GroupLevelRoot {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_ROOT_GROUP_DELETE,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_ROOT_GROUP_DELETE,nil)
 		return
 	}else if linGroup.Level == setting.LinSetting.GroupLevelGuest  {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_GUEST_GROUP_DELETE,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_GUEST_GROUP_DELETE,nil)
 		return
 	}
 

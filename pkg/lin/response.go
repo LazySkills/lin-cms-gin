@@ -3,7 +3,7 @@ package lin
 
 import (
 	"github.com/gin-gonic/gin"
-	"lin-cms-gin/internal/pkg/e"
+	"lin-cms-gin/pkg/e"
 )
 
 type Gin struct {
@@ -41,10 +41,10 @@ func (g *Gin) ResponseSuccess(httpCode int, errCode int, data interface{}) {
 
 func (g *Gin) ResponseError(httpCode int, errCode int, data interface{}) {
 	g.C.JSON(httpCode, ResponseError{
-		Code: errCode,
-		Msg:  e.GetMsg(errCode),
+		Code:    errCode,
+		Msg:     e.GetMsg(errCode),
 		Request: g.C.Request.Method+" "+g.C.Request.RequestURI,
-		Data: data,
+		Data:    data,
 	})
 	return
 }

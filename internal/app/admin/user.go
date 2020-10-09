@@ -7,9 +7,9 @@ import (
 	"lin-cms-gin/internal/middleware/jwt"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/lin"
-	unit "lin-cms-gin/internal/pkg/tools"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/lin"
+	unit "lin-cms-gin/pkg/tools"
 	"net/http"
 	"strings"
 	"time"
@@ -45,14 +45,14 @@ func UserRegister(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
 	if ! models.ExistLinUserByUsername(req.Username) {
 		_,err := models.AddLinAuth(req.Username, req.Password)
 		if err != nil {
-			appG.ResponseError(http.StatusBadRequest,e.ERROR_USER_PASSWORD_PBKDF2_FAIL,nil)
+			appG.ResponseError(http.StatusBadRequest, e.ERROR_USER_PASSWORD_PBKDF2_FAIL,nil)
 			return
 		}
 	}
@@ -79,16 +79,16 @@ func UserUpdate(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
 	if !models.UpdateUserInfo(permission.UserGroup.ID,req.Username,req.Nickname,req.Email,req.Avatar) {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_UPDATE_USER_FAIL,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_UPDATE_USER_FAIL,nil)
 		return
 	}
 
-	appG.ResponseSuccess(http.StatusOK,e.SUCCESS, nil)
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
 }
 
 
@@ -107,18 +107,18 @@ func UserUpdatePassword(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UserUpdatePassword") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
 	if !models.UpdateIdentityPasswordByUserID(jwt.Claims.UniqueId,req.OldPassword,req.NewPassword) {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_UPDATE_USER_FAIL,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_UPDATE_USER_FAIL,nil)
 		return
 	}
 
@@ -141,7 +141,7 @@ func UserLogin(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
@@ -240,7 +240,7 @@ func UserGetPermissions(c *gin.Context)  {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UserGetPermissions") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -279,7 +279,7 @@ func UserGetInFormation(c *gin.Context)  {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UserGetInFormation") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -287,7 +287,7 @@ func UserGetInFormation(c *gin.Context)  {
 	if jwt.Claims.UniqueId >0  {
 		user = models.GetLinUserByID(jwt.Claims.UniqueId)
 	}else {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_USER,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_NOT_EXIST_USER,nil)
 		c.Abort()
 		return
 	}

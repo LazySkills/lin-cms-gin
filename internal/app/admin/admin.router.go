@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"lin-cms-gin/internal/middleware/jwt"
 	"lin-cms-gin/internal/middleware/permission"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/setting"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/setting"
 	"net/http"
 )
 
@@ -22,7 +22,7 @@ func IncludePermissionModule()  {
 // 路由注册蓝图
 func IncludeRouter(r *gin.Engine)  {
 	// 设置静态文件浏览
-	r.StaticFS("/assets", http.Dir(fmt.Sprintf("tmp/%s",setting.FileSetting.FileSavePath)))
+	r.StaticFS("/assets", http.Dir(fmt.Sprintf("tmp/%s", setting.FileSetting.FileSavePath)))
 
 	apiV1 := r.Group("/cms")
 	//用户-登录

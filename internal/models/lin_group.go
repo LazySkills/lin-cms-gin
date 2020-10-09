@@ -2,16 +2,16 @@
 package models
 
 import (
-	jtime "lin-cms-gin/internal/pkg/time"
+	jtime "lin-cms-gin/pkg/time"
 )
 
 // LinGroup [...]
 type LinGroup struct {
 	Model
-	Name string `gorm:"unique_index:name_del;column:name;type:varchar(60);not null;comment:'分组名称，例如：搬砖者'"`
-	Info string `gorm:"column:info;type:varchar(255);comment:'分组信息：例如：搬砖的人'"`
-	Level int `gorm:"column:level;type:tinyint(2);default:3;comment:'分组级别 1：root 2：guest 3：user  root（root、guest分组只能存在一个)'"`
-	DeleteTime jtime.JSONTime  `gorm:"unique_index:name_del;column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
+	Name       string         `gorm:"unique_index:name_del;column:name;type:varchar(60);not null;comment:'分组名称，例如：搬砖者'"`
+	Info       string         `gorm:"column:info;type:varchar(255);comment:'分组信息：例如：搬砖的人'"`
+	Level      int            `gorm:"column:level;type:tinyint(2);default:3;comment:'分组级别 1：root 2：guest 3：user  root（root、guest分组只能存在一个)'"`
+	DeleteTime jtime.JSONTime `gorm:"unique_index:name_del;column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
 }
 
 // LinGroup [...]

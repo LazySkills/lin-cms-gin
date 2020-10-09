@@ -4,8 +4,8 @@ package logging
 
 import (
 	"fmt"
-	"lin-cms-gin/internal/pkg/file"
-	"lin-cms-gin/internal/pkg/setting"
+	"lin-cms-gin/pkg/file"
+	"lin-cms-gin/pkg/setting"
 	"os"
 	"time"
 )

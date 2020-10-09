@@ -1,16 +1,16 @@
 /** Created By wene<354007048@qq.com> . Date at 2020/6/9 */
 package models
 
-import jtime "lin-cms-gin/internal/pkg/time"
+import jtime "lin-cms-gin/pkg/time"
 
 // Book [...]
 type Book struct {
 	Model
-	Title      string    `gorm:"column:title;type:varchar(50);not null;comment:'书名'"`
-	Author     string    `gorm:"column:author;type:varchar(30);not null;comment:'作者'"`
-	Summary    string    `gorm:"column:summary;type:varchar(1000);not null;comment:'简介'"`
-	Image      string    `gorm:"column:image;type:varchar(50);not null;comment:'封面'"`
-	DeleteTime jtime.JSONTime  `gorm:"column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
+	Title      string         `gorm:"column:title;type:varchar(50);not null;comment:'书名'"`
+	Author     string         `gorm:"column:author;type:varchar(30);not null;comment:'作者'"`
+	Summary    string         `gorm:"column:summary;type:varchar(1000);not null;comment:'简介'"`
+	Image      string         `gorm:"column:image;type:varchar(50);not null;comment:'封面'"`
+	DeleteTime jtime.JSONTime `gorm:"column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
 }
 
 func GetBook(pageNum int, pageSize int, maps interface {}) (books []Book) {

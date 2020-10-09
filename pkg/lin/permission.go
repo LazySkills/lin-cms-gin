@@ -4,7 +4,7 @@ package lin
 import (
 	"fmt"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/logging"
+	"lin-cms-gin/pkg/logging"
 )
 
 var PermissionMapping = make(map[string]permissionMapping)
@@ -71,7 +71,7 @@ func Include(v interface{})  {
 
 
 func GetPermissionMappingByName(method string,action string) (per permissionMapping) {
-	fmt.Printf("method - action: %v \n",GetPermissionEndpoint(action,method))
+	fmt.Printf("method - action: %v \n", GetPermissionEndpoint(action,method))
 	fmt.Printf("count: %v \n",len(PermissionMapping))
 	for item,_ := range PermissionMapping {
 		fmt.Printf("PermissionMapping item k: %v \n",item)

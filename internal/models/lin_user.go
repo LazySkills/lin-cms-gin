@@ -2,18 +2,18 @@
 package models
 
 import (
-	jtime "lin-cms-gin/internal/pkg/time"
-	"lin-cms-gin/internal/pkg/tools"
+	jtime "lin-cms-gin/pkg/time"
+	"lin-cms-gin/pkg/tools"
 )
 
 // LinUser [...]
 type LinUser struct {
 	Model
-	Username        string    `gorm:"unique_index:username_del;column:username;type:varchar(24);not null;comment:'用户名称'"`
-	Nickname        string    `gorm:"column:nickname;type:varchar(24);comment:'昵称'"`
-	Email           string    `gorm:"unique_index:email_del;column:email;type:varchar(100);not null;comment:'邮箱'"`
-	Avatar          string    `gorm:"column:avatar;type:varchar(500);comment:'头像'"`
-	DeleteTime      jtime.JSONTime `gorm:"unique_index:username_del,email_del;column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
+	Username        string          `gorm:"unique_index:username_del;column:username;type:varchar(24);not null;comment:'用户名称'"`
+	Nickname        string          `gorm:"column:nickname;type:varchar(24);comment:'昵称'"`
+	Email           string          `gorm:"unique_index:email_del;column:email;type:varchar(100);not null;comment:'邮箱'"`
+	Avatar          string          `gorm:"column:avatar;type:varchar(500);comment:'头像'"`
+	DeleteTime      jtime.JSONTime  `gorm:"unique_index:username_del,email_del;column:delete_time;type:datetime(3);default:NULL;comment:'删除时间'"`
 	linUserIdentity LinUserIdentity `gorm:"FOREIGNKEY:user_id"`
 }
 

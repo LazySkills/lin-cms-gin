@@ -5,7 +5,7 @@ package tools
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
-	"lin-cms-gin/internal/pkg/setting"
+	"lin-cms-gin/pkg/setting"
 )
 
 func GetPage(c *gin.Context) int {

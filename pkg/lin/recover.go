@@ -3,7 +3,7 @@ package lin
 
 import (
 	"github.com/gin-gonic/gin"
-	"lin-cms-gin/internal/pkg/e"
+	"lin-cms-gin/pkg/e"
 	"log"
 	"net/http"
 	"runtime/debug"
@@ -19,7 +19,7 @@ func Recover(c *gin.Context) {
 			//封装通用json返回
 			//c.JSON(http.StatusOK, Result.Fail(errorToString(r)))
 			//Result.Fail不是本例的重点，因此用下面代码代替
-			appG.ResponseError(http.StatusBadRequest,e.ERROR, errorToString(r))
+			appG.ResponseError(http.StatusBadRequest, e.ERROR, errorToString(r))
 			//终止后续接口调用，不加的话recover到异常后，还会继续执行接口里后续代码
 			c.Abort()
 		}

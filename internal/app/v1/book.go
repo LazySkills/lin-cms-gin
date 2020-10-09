@@ -5,13 +5,13 @@ import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
+	v1 "lin-cms-gin/internal/dto/v1"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
-	"lin-cms-gin/internal/pkg/e"
-	"lin-cms-gin/internal/pkg/lin"
-	"lin-cms-gin/internal/pkg/setting"
-	"lin-cms-gin/internal/pkg/tools"
-	v1 "lin-cms-gin/internal/dto/v1"
+	"lin-cms-gin/pkg/e"
+	"lin-cms-gin/pkg/lin"
+	"lin-cms-gin/pkg/setting"
+	"lin-cms-gin/pkg/tools"
 	"net/http"
 )
 
@@ -39,7 +39,7 @@ func GetBooksInfo(c *gin.Context) {
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"GetBooksInfo") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
 	}
@@ -48,7 +48,7 @@ func GetBooksInfo(c *gin.Context) {
 
 	data := models.ExistBookByID(id)
 	if 	data.ID < 1 {
-		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_BOOK,nil)
+		appG.ResponseError(http.StatusBadRequest, e.ERROR_NOT_EXIST_BOOK,nil)
 	}
 
 	appG.Response(http.StatusOK,data)
@@ -64,7 +64,7 @@ func GetBooks(c *gin.Context) {
 	var appG = lin.Gin{C: c}
 
 	if !permission.GroupRequired(appG.C.Request.Method,"GetBooks") {
-		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		appG.C.Abort()
 		return
 	}
@@ -107,7 +107,7 @@ func AddBook(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
 		return
 	}
 
@@ -143,7 +143,7 @@ func EditBook(c *gin.Context) {
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
-		appG.ResponseError(http.StatusOK,e.SUCCESS,err)
+		appG.ResponseError(http.StatusOK, e.SUCCESS,err)
 		return
 	}
 

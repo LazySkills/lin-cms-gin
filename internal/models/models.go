@@ -6,8 +6,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"lin-cms-gin/internal/pkg/setting"
-	stime "lin-cms-gin/internal/pkg/time"
+	"lin-cms-gin/pkg/setting"
+	stime "lin-cms-gin/pkg/time"
 	"log"
 	"os"
 	"time"
@@ -16,7 +16,7 @@ import (
 var db *gorm.DB
 
 type Model struct {
-	ID         int           `gorm:"primary_key;column:id;type:int(11) unsigned auto_increment;not null;comment:'ID';" json:"id"`
+	ID         int            `gorm:"primary_key;column:id;type:int(11) unsigned auto_increment;not null;comment:'ID';" json:"id"`
 	CreateTime stime.JSONTime `gorm:"column:create_time;type:datetime(3);default:CURRENT_TIMESTAMP(3);comment:'创建时间'"`
 	UpdateTime stime.JSONTime `gorm:"column:update_time;type:datetime(3);default:CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);comment:'更新时间'"`
 }

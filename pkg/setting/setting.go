@@ -2,10 +2,9 @@
 package setting
 
 import (
-"log"
-"time"
-
-"github.com/go-ini/ini"
+	"log"
+	"time"
+	"github.com/go-ini/ini"
 )
 
 type App struct {

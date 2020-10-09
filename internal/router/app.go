@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"lin-cms-gin/internal/app/admin"
 	v1 "lin-cms-gin/internal/app/v1"
-	"lin-cms-gin/internal/pkg/setting"
-	"lin-cms-gin/internal/pkg/tools"
+	"lin-cms-gin/pkg/setting"
+	"lin-cms-gin/pkg/tools"
 )
 
 func cors() gin.HandlerFunc {
