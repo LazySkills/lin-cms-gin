@@ -13,3 +13,9 @@ type NewGroupForm struct {
 	Info string `form:"info" json:"info" binding:"required"`
 	PermissionIds []int `form:"permission_ids" json:"permission_ids" binding:"required"`
 }
+
+// 创建权限组验证
+type UpdateGroupForm struct {
+	Name string `form:"name" json:"name" binding:"required"`
+	Info string `form:"info" json:"info" binding:"required"`
+}

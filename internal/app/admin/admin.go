@@ -34,6 +34,7 @@ func (p *LinAdminPermission) AuthMapping()  {
 	p.Mapping("DispatchPermission","POST","分配单个权限","管理员",1)
 	p.Mapping("DispatchPermissions","POST","分配多个权限","管理员",1)
 	p.Mapping("RemovePermissions","POST","删除多个权限","管理员",1)
+	p.Mapping("UpdateGroup","PUT","更新一个权限组","管理员",1)
 }
 
 
@@ -318,6 +319,12 @@ func CreateGroup(c *gin.Context) {
 		req = &cms.NewGroupForm{}
 	)
 
+	if !permission.GroupRequired(c.Request.Method,"CreateGroup") {
+		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		c.Abort()
+		return
+	}
+
 	if err := lin.Validator(appG.C,req); err != ""{
 		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
 		return
@@ -328,5 +335,78 @@ func CreateGroup(c *gin.Context) {
 		models.AddLinGroupPermission(linGourp.ID, k)
 	}
 
-	appG.Response(http.StatusOK, nil)
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
+}
+
+// @Summary 更新一个权限组
+// @Tags 管理员
+// @Produce  json
+// @Param Authorization header string true "授权token"
+// @Param name query string true "组名"
+// @Param info query string true "备注"
+// @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
+// @Router /cms/admin/group/:id [put]
+func UpdateGroup(c *gin.Context) {
+	var (
+		appG = lin.Gin{C: c}
+		req = &cms.UpdateGroupForm{}
+	)
+
+	if !permission.GroupRequired(c.Request.Method,"UpdateGroup") {
+		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		c.Abort()
+		return
+	}
+
+	if err := lin.Validator(appG.C,req); err != ""{
+		appG.ResponseError(http.StatusBadRequest,e.INVALID_PARAMS,err)
+		return
+	}
+
+	linGroup := models.GetLinGroupByID(com.StrTo(c.Param("id")).MustInt())
+	if linGroup.ID > 0 {
+		linGroup.UpdateLinGroup(req.Name,req.Info)
+	}else {
+		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_GROUP,nil)
+		return
+	}
+
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
+}
+
+
+// @Summary 更新一个权限组
+// @Tags 管理员
+// @Produce  json
+// @Param Authorization header string true "授权token"
+// @Param name query string true "组名"
+// @Param info query string true "备注"
+// @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
+// @Router /cms/admin/group/:id [put]
+func DeleteGroup(c *gin.Context) {
+	var (
+		appG = lin.Gin{C: c}
+	)
+
+	if !permission.GroupRequired(c.Request.Method,"DeleteGroup") {
+		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
+		c.Abort()
+		return
+	}
+
+	linGroup := models.GetLinGroupByID(com.StrTo(c.Param("id")).MustInt())
+	if linGroup.ID < 1 {
+		appG.ResponseError(http.StatusBadRequest,e.ERROR_NOT_EXIST_GROUP,nil)
+		return
+	}
+
+	if linGroup.Level == setting.LinSetting.GroupLevelRoot {
+		appG.ResponseError(http.StatusBadRequest,e.ERROR_ROOT_GROUP_DELETE,nil)
+		return
+	}else if linGroup.Level == setting.LinSetting.GroupLevelGuest  {
+		appG.ResponseError(http.StatusBadRequest,e.ERROR_GUEST_GROUP_DELETE,nil)
+		return
+	}
+
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
 }

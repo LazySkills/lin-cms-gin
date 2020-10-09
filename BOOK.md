@@ -19,7 +19,7 @@
     2.将其解压缩到/usr/local/(会在/usr/local中创建一个go目录)
     ```
     tar -C /usr/local -xzf go1.13.6.linux-amd64.tar.gz
-   ```
+    ```
     3.添加环境变量
     ```
      vim /etc/profile

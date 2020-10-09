@@ -44,4 +44,11 @@ const (
 	// 用户不存在
 	ERROR_NOT_EXIST_USER = 40006
 
+
+	// 分组不存在
+	ERROR_NOT_EXIST_GROUP = 50000
+	// 不能删除root分组
+	ERROR_ROOT_GROUP_DELETE = 50001
+	ERROR_GUEST_GROUP_DELETE = 50002
+
 )

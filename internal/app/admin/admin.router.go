@@ -71,5 +71,7 @@ func IncludeRouter(r *gin.Engine)  {
 
 		// 管理员-新建权限组
 		apiV1.POST("/admin/group", CreateGroup)
+		// 管理员-更新一个权限组
+		apiV1.PUT("/admin/group/:id", UpdateGroup)
 	}
 }

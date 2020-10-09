@@ -278,7 +278,7 @@ func UserGetInFormation(c *gin.Context)  {
 		user     models.LinUser
 	)
 
-	if !permission.GroupRequired(c.Request.Method,"UserGetInreqation") {
+	if !permission.GroupRequired(c.Request.Method,"UserGetInFormation") {
 		appG.ResponseError(http.StatusForbidden,e.AUTH_FAIL,nil)
 		c.Abort()
 		return

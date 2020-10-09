@@ -32,6 +32,22 @@ func AddLinGroup(name string, info string, level int) (group LinGroup) {
 	return
 }
 
+func (this *LinGroup) UpdateLinGroup(name string, info string) bool {
+	result := db.Model(&this).Select("name","info","level").Updates(map[string]interface{}{"name": name, "info": info})
+
+	if result.Error != nil {
+		panic(result.Error)
+	}
+
+	return true
+}
+
+func GetLinGroupByID(id int) (linGroup LinGroup) {
+	db.Where("id = ?", id).Find(&linGroup)
+	return
+}
+
+
 func GetLinGroup(pageNum int, pageSize int, maps map[string]interface{}) (users []LinGroupJson) {
 	db.Model(LinGroup{}).Where(maps).Offset(pageNum).Limit(pageSize).Select("id, name, info").Scan(&users)
 

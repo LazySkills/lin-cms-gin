@@ -64,6 +64,13 @@ type Database struct {
 
 var DatabaseSetting = &Database{}
 
+type Lin struct {
+	GroupLevelRoot int
+	GroupLevelGuest int
+}
+
+var LinSetting = &Lin{}
+
 func Setup() {
 	Cfg, err := ini.Load("internal/config/app.ini")
 	if err != nil {
@@ -102,5 +109,10 @@ func Setup() {
 	err = Cfg.Section("database").MapTo(DatabaseSetting)
 	if err != nil {
 		log.Fatalf("Cfg.MapTo DatabaseSetting err: %v", err)
+	}
+
+	err = Cfg.Section("lin").MapTo(LinSetting)
+	if err != nil {
+		log.Fatalf("Cfg.MapTo LinSetting err: %v", err)
 	}
 }
