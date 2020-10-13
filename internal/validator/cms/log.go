@@ -5,7 +5,7 @@ import "lin-cms-gin/pkg/time"
 
 // 日志验证器
 type LogFindValidator struct {
-	Name int `form:"name" json:"v" binding:"alphanum"`
+	Name string `form:"name" json:"v" binding:""`
 	Start time.JSONTime `form:"start" json:"start" binding:""`
 	End time.JSONTime `form:"end" json:"end" binding:""`
 }

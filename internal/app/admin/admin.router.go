@@ -25,6 +25,7 @@ func IncludeRouter(r *gin.Engine)  {
 	r.StaticFS("/assets", http.Dir(fmt.Sprintf("tmp/%s", setting.FileSetting.FileSavePath)))
 
 	apiV1 := r.Group("/cms")
+
 	//用户-登录
 	apiV1.POST("/user/login", UserLogin)
 	//用户-刷新授权
@@ -81,6 +82,7 @@ func IncludeRouter(r *gin.Engine)  {
 		apiV1.POST("/admin/permission/dispatch/batch", DispatchPermissions)
 		// 管理员-删除多个权限
 		apiV1.POST("/admin/permission/remove", RemovePermissions)
+
 
 		// 日志-查询所有日志
 		apiV1.GET("/log", GetLogs)

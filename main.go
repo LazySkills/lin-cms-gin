@@ -19,6 +19,7 @@ func init() {
 // dev win F:\tool\go\root_path\bin\fresh.exe 本地开发使用
 // dev mac /Users/wangyu/go/bin/fresh 本地开发使用
 func main() {
+
 	if err := lin.InitTrans("zh"); err != nil {
 		fmt.Printf("init trans failed, err:%v\n", err)
 		return
