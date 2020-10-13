@@ -34,3 +34,8 @@ func GetLinPermissionByName(name string) (per LinPermission) {
 	db.Where("name = ?", name).Find(&per)
 	return
 }
+
+func GetLinPermissionById(id int) (per LinPermission) {
+	db.Where("id = ?", id).Find(&per)
+	return
+}

@@ -71,6 +71,33 @@ paths:
       tags:
       - 管理员
   /cms/admin/group/:id:
+    delete:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 分组ID
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: 权限IDs
+        in: query
+        name: permission_id
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 分配多个权限
+      tags:
+      - 管理员
     get:
       parameters:
       - description: 授权token
@@ -86,6 +113,33 @@ paths:
           schema:
             type: string
       summary: 查询一个权限组及其权限
+      tags:
+      - 管理员
+    put:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 组名
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 备注
+        in: query
+        name: info
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 更新一个权限组
       tags:
       - 管理员
   /cms/admin/permission:
@@ -104,6 +158,62 @@ paths:
           schema:
             type: string
       summary: 查询所有可分配的权限
+      tags:
+      - 管理员
+  /cms/admin/permission/dispatch:
+    post:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 分组ID
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: 权限ID
+        in: query
+        name: permission_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 分配单个权限
+      tags:
+      - 管理员
+  /cms/admin/permission/dispatch/batch:
+    post:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 分组ID
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: 权限IDs
+        in: query
+        name: permission_id
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id":2,"name":"guest","info":"游客组"}]'
+          schema:
+            type: string
+      summary: 分配多个权限
       tags:
       - 管理员
   /cms/admin/user/:id:
@@ -212,6 +322,60 @@ paths:
       summary: 查询所有用户
       tags:
       - 管理员
+  /cms/log:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询所有日志
+      tags:
+      - 日志
+  /cms/log/search:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 搜索日志
+      tags:
+      - 日志
+  /cms/log/users:
+    get:
+      parameters:
+      - description: 授权token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{....}'
+          schema:
+            type: string
+      summary: 查询日志记录的用户
+      tags:
+      - 日志
   /cms/user:
     put:
       parameters:

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
-	"lin-cms-gin/internal/dto/cms"
+	"lin-cms-gin/internal/validator/cms"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
 	"lin-cms-gin/pkg/e"
@@ -35,6 +35,10 @@ func (p *LinAdminPermission) AuthMapping()  {
 	p.Mapping("DispatchPermissions","POST","分配多个权限","管理员",1)
 	p.Mapping("RemovePermissions","POST","删除多个权限","管理员",1)
 	p.Mapping("UpdateGroup","PUT","更新一个权限组","管理员",1)
+	p.Mapping("DeleteGroup","DELETE","删除一个权限组","管理员",1)
+	p.Mapping("DispatchPermission","POST","分配单个权限","管理员",1)
+	p.Mapping("DispatchPermissions","POST","分配多个权限","管理员",1)
+	p.Mapping("RemovePermissions","POST","删除多个权限","管理员",1)
 }
 
 
@@ -125,7 +129,7 @@ func GetAdminUsers(c *gin.Context)  {
 func ChangeUserPassword(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.ChangeUserPasswordForm{}
+		req = &cms.ChangeUserPasswordValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"ChangeUserPassword") {
@@ -160,7 +164,7 @@ func DeleteUser(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
 		httpCode = http.StatusOK
-		req = &cms.ChangeUserPasswordForm{}
+		req = &cms.ChangeUserPasswordValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"DeleteUser") {
@@ -199,7 +203,7 @@ func DeleteUser(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.UpdateUserForm{}
+		req = &cms.UpdateUserValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UpdateUser") {
@@ -316,7 +320,7 @@ func GetGroup(c *gin.Context) {
 func CreateGroup(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.NewGroupForm{}
+		req = &cms.NewGroupValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"CreateGroup") {
@@ -349,7 +353,7 @@ func CreateGroup(c *gin.Context) {
 func UpdateGroup(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.UpdateGroupForm{}
+		req = &cms.UpdateGroupValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UpdateGroup") {
@@ -375,14 +379,12 @@ func UpdateGroup(c *gin.Context) {
 }
 
 
-// @Summary 更新一个权限组
+// @Summary 删除一个权限组
 // @Tags 管理员
 // @Produce  json
 // @Param Authorization header string true "授权token"
-// @Param name query string true "组名"
-// @Param info query string true "备注"
 // @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
-// @Router /cms/admin/group/:id [put]
+// @Router /cms/admin/group/:id [delete]
 func DeleteGroup(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
@@ -394,17 +396,115 @@ func DeleteGroup(c *gin.Context) {
 		return
 	}
 
-	linGroup := models.GetLinGroupByID(com.StrTo(c.Param("id")).MustInt())
-	if linGroup.ID < 1 {
-		appG.ResponseError(http.StatusBadRequest, e.ERROR_NOT_EXIST_GROUP,nil)
+	res := models.DeleteLinGroup(com.StrTo(c.Param("id")).MustInt())
+	if res != true {
+		appG.ResponseError(http.StatusForbidden, e.DELETE_FAIL_GROUP,nil)
 		return
 	}
 
-	if linGroup.Level == setting.LinSetting.GroupLevelRoot {
-		appG.ResponseError(http.StatusBadRequest, e.ERROR_ROOT_GROUP_DELETE,nil)
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
+}
+
+
+
+// @Summary 分配单个权限
+// @Tags 管理员
+// @Produce  json
+// @Param Authorization header string true "授权token"
+// @Param group_id query int true "分组ID"
+// @Param permission_id query int true "权限ID"
+// @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
+// @Router /cms/admin/permission/dispatch [post]
+func DispatchPermission(c *gin.Context) {
+	var (
+		appG = lin.Gin{C: c}
+		req = &cms.DispatchPermissionValidator{}
+	)
+
+	if !permission.GroupRequired(c.Request.Method,"DispatchPermission") {
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
+		c.Abort()
 		return
-	}else if linGroup.Level == setting.LinSetting.GroupLevelGuest  {
-		appG.ResponseError(http.StatusBadRequest, e.ERROR_GUEST_GROUP_DELETE,nil)
+	}
+
+	if err := lin.Validator(appG.C,req); err != ""{
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
+		return
+	}
+
+	res,_ := models.DispatchPermission(req.GroupId,req.PermissionId)
+	if res != true {
+		appG.ResponseError(http.StatusForbidden, e.DELETE_FAIL_GROUP,nil)
+		return
+	}
+
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
+}
+
+
+// @Summary 分配多个权限
+// @Tags 管理员
+// @Produce  json
+// @Param Authorization header string true "授权token"
+// @Param group_id query int true "分组ID"
+// @Param permission_id query array true "权限IDs"
+// @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
+// @Router /cms/admin/permission/dispatch/batch [post]
+func DispatchPermissions(c *gin.Context) {
+	var (
+		appG = lin.Gin{C: c}
+		req = &cms.DispatchPermissionValidators{}
+	)
+
+	if !permission.GroupRequired(c.Request.Method,"DispatchPermissions") {
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
+		c.Abort()
+		return
+	}
+
+	if err := lin.Validator(appG.C,req); err != ""{
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
+		return
+	}
+
+	res,_ := models.DispatchPermissions(req.GroupId,req.PermissionIds)
+	if res != true {
+		appG.ResponseError(http.StatusForbidden, e.DELETE_FAIL_GROUP,nil)
+		return
+	}
+
+	appG.ResponseSuccess(http.StatusOK, e.SUCCESS, nil)
+}
+
+
+// @Summary 分配多个权限
+// @Tags 管理员
+// @Produce  json
+// @Param Authorization header string true "授权token"
+// @Param group_id query int true "分组ID"
+// @Param permission_id query array true "权限IDs"
+// @Success 200 {string} json "[{"id":2,"name":"guest","info":"游客组"}]"
+// @Router /cms/admin/group/:id [delete]
+func RemovePermissions(c *gin.Context) {
+	var (
+		appG = lin.Gin{C: c}
+		req = &cms.DispatchPermissionValidators{}
+	)
+
+	if !permission.GroupRequired(c.Request.Method,"RemovePermissions") {
+		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
+		c.Abort()
+		return
+	}
+
+	if err := lin.Validator(appG.C,req); err != ""{
+		appG.ResponseError(http.StatusBadRequest, e.INVALID_PARAMS,err)
+		return
+	}
+
+	res := models.RemovePermissions(req.GroupId,req.PermissionIds)
+	if res != true {
+		appG.ResponseError(http.StatusForbidden, e.DELETE_FAIL_GROUP,nil)
 		return
 	}
 

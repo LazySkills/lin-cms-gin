@@ -50,5 +50,7 @@ const (
 	// 不能删除root分组
 	ERROR_ROOT_GROUP_DELETE = 50001
 	ERROR_GUEST_GROUP_DELETE = 50002
+	// 删除分组失败
+	DELETE_FAIL_GROUP = 50003
 
 )

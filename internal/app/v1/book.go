@@ -5,7 +5,7 @@ import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
-	v1 "lin-cms-gin/internal/dto/v1"
+	v1 "lin-cms-gin/internal/validator/v1"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
 	"lin-cms-gin/pkg/e"
@@ -103,7 +103,7 @@ func GetBooks(c *gin.Context) {
 func AddBook(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &v1.AddBookForm{}
+		req = &v1.AddBookValidator{}
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
@@ -139,7 +139,7 @@ func EditBook(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
 		errCode = e.SUCCESS
-		req = &v1.UpdateBookForm{}
+		req = &v1.UpdateBookValidator{}
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{

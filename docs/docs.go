@@ -154,6 +154,86 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "更新一个权限组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "组名",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "备注",
+                        "name": "info",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "[{\"id\":2,\"name\":\"guest\",\"info\":\"游客组\"}]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "分配多个权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分组ID",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "description": "权限IDs",
+                        "name": "permission_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "[{\"id\":2,\"name\":\"guest\",\"info\":\"游客组\"}]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         },
         "/cms/admin/permission": {
@@ -177,6 +257,90 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "{....}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/admin/permission/dispatch": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "分配单个权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分组ID",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "权限ID",
+                        "name": "permission_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "[{\"id\":2,\"name\":\"guest\",\"info\":\"游客组\"}]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/admin/permission/dispatch/batch": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "分配多个权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分组ID",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "description": "权限IDs",
+                        "name": "permission_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "[{\"id\":2,\"name\":\"guest\",\"info\":\"游客组\"}]",
                         "schema": {
                             "type": "string"
                         }
@@ -324,6 +488,90 @@ var doc = `{
                     "管理员"
                 ],
                 "summary": "查询所有用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{....}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/log": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "日志"
+                ],
+                "summary": "查询所有日志",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{....}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/log/search": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "日志"
+                ],
+                "summary": "搜索日志",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "授权token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{....}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/log/users": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "日志"
+                ],
+                "summary": "查询日志记录的用户",
                 "parameters": [
                     {
                         "type": "string",

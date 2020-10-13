@@ -3,7 +3,7 @@ package admin
 
 import (
 	gin "github.com/gin-gonic/gin"
-	"lin-cms-gin/internal/dto/cms"
+	"lin-cms-gin/internal/validator/cms"
 	"lin-cms-gin/internal/middleware/jwt"
 	"lin-cms-gin/internal/middleware/permission"
 	"lin-cms-gin/internal/models"
@@ -41,7 +41,7 @@ func (p *LinUserPermission) AuthMapping()  {
 func UserRegister(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.AddUserForm{}
+		req = &cms.AddUserValidator{}
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
@@ -75,7 +75,7 @@ func UserRegister(c *gin.Context) {
 func UserUpdate(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.UpdateUserForm{}
+		req = &cms.UpdateUserValidator{}
 	)
 
 	if err := lin.Validator(appG.C,req); err != ""{
@@ -103,7 +103,7 @@ func UserUpdate(c *gin.Context) {
 func UserUpdatePassword(c *gin.Context) {
 	var (
 		appG = lin.Gin{C: c}
-		req = &cms.UpdateUserPasswordForm{}
+		req = &cms.UpdateUserPasswordValidator{}
 	)
 
 	if !permission.GroupRequired(c.Request.Method,"UserUpdatePassword") {
@@ -135,7 +135,7 @@ func UserUpdatePassword(c *gin.Context) {
 func UserLogin(c *gin.Context) {
 	var (
 		appG  = lin.Gin{C: c}
-		req  = &cms.AddUserForm{}
+		req  = &cms.AddUserValidator{}
 		errCode = e.SUCCESS
 		AuthM models.LinUserIdentity
 	)

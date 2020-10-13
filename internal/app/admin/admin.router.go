@@ -73,5 +73,20 @@ func IncludeRouter(r *gin.Engine)  {
 		apiV1.POST("/admin/group", CreateGroup)
 		// 管理员-更新一个权限组
 		apiV1.PUT("/admin/group/:id", UpdateGroup)
+		// 管理员-删除一个权限组
+		apiV1.DELETE("/admin/group/:id", DeleteGroup)
+		// 管理员-分配单个权限
+		apiV1.POST("/admin/permission/dispatch", DispatchPermission)
+		// 管理员-分配多个权限
+		apiV1.POST("/admin/permission/dispatch/batch", DispatchPermissions)
+		// 管理员-删除多个权限
+		apiV1.POST("/admin/permission/remove", RemovePermissions)
+
+		// 日志-查询所有日志
+		apiV1.GET("/log", GetLogs)
+		// 日志-搜索日志
+		apiV1.GET("/log/search", GetUserLogs)
+		// 日志-查询日志记录的用户
+		apiV1.GET("/log/users", GetUsers)
 	}
 }

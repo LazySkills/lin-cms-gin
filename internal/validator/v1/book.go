@@ -1,7 +1,7 @@
 package v1
 
 
-type AddBookForm struct {
+type AddBookValidator struct {
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Author          string `form:"author" valid:"Required;MaxSize(255)"`
 	Summary       string `form:"summary" valid:"Required;MaxSize(65535)"`
@@ -9,7 +9,7 @@ type AddBookForm struct {
 }
 
 
-type UpdateBookForm struct {
+type UpdateBookValidator struct {
 	ID            int    `form:"id" valid:"Required;Min(1)"`
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Author        string `form:"author" valid:"Required;MaxSize(255)"`
