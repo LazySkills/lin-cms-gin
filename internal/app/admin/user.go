@@ -49,15 +49,17 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 
-	if ! models.ExistLinUserByUsername(req.Username) {
+	if !models.ExistLinUserByUsername(req.Username) {
 		_,err := models.AddLinAuth(req.Username, req.Password)
 		if err != nil {
 			appG.ResponseError(http.StatusBadRequest, e.ERROR_USER_PASSWORD_PBKDF2_FAIL,nil)
 			return
+		}else{
+			appG.ResponseSuccess(http.StatusOK, e.SUCCESS,nil)
+			return
 		}
 	}
-
-	appG.Response(http.StatusOK, nil)
+	appG.ResponseError(http.StatusBadRequest, e.ERROR_EXIST_USER,nil)
 }
 
 

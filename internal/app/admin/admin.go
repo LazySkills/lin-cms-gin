@@ -86,7 +86,7 @@ func GetAdminUsers(c *gin.Context)  {
 		data = make(map[string]interface{})
 	)
 
-	if !permission.GroupRequired(c.Request.Method,"UserGetPermissions") {
+	if !permission.GroupRequired(c.Request.Method,"GetAdminUsers") {
 		appG.ResponseError(http.StatusForbidden, e.AUTH_FAIL,nil)
 		c.Abort()
 		return
@@ -96,8 +96,6 @@ func GetAdminUsers(c *gin.Context)  {
 	if arg := appG.C.Query("count"); arg != "" {
 		limit = com.StrTo(arg).MustInt()
 	}
-
-	maps["user_id <>"] = 1   // 排除管理员
 
 	if arg := appG.C.Query("group_id"); arg != "" {
 		var linUsersIds []int

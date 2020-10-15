@@ -17,6 +17,12 @@ type LinUser struct {
 	linUserIdentity LinUserIdentity `gorm:"FOREIGNKEY:user_id"`
 }
 
+type LinUserJosn struct {
+	Id string
+	Nickname string
+	Username string
+}
+
 
 func AddLinUser(username string, nickname string, email string, avatar string) bool {
 	db.Create(&LinUser{
@@ -93,7 +99,13 @@ func GetLinUserByID(id int) (user LinUser) {
 }
 
 func GetLinUser(pageNum int, pageSize int, maps map[string]interface{}) (users []LinUser) {
-	db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&users)
+	db.Where(maps).Offset(pageNum).Not([]int{1}).Limit(pageSize).Find(&users)
+
+	return
+}
+
+func GetLinUserTotal(maps map[string]interface{}) (count int64){
+	db.Model(&LinUser{}).Not([]int{1}).Distinct("id").Where(maps).Count(&count)
 
 	return
 }
@@ -104,11 +116,7 @@ func DeleteLinUser(id int) bool {
 	return true
 }
 
-func GetLinUserTotal(maps map[string]interface{}) (count int64){
-	db.Model(&LinUser{}).Distinct("id").Where(maps).Count(&count)
 
-	return
-}
 
 func (this *LinUser)Migrate()  {
 	m := db.Migrator()
