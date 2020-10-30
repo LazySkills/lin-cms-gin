@@ -20,10 +20,6 @@
 * 在上一点的基础上，我们会尝试加入一些自己的想法并实现。
 * 局限于本人水平，有些地方还需重构，已经纳入了计划中，当然也会有我没考虑到的，希望有更多人参与进来一起完善，毕竟Go作为最潮流的语言不能缺席。
 
-## 线上文档地址(完善中...)
-
-文档：[LazySkills/Lin-Cms-Gin](https://lazyskills.github.io/views/go/Lin-Cms-Gin/)
-
 ## 目前版本说明
 
 因为部分原因，本项目直接同步 [`lin-cms-spring-boot`](https://github.com/TaleLin/lin-cms-spring-boot) 0.3版本
@@ -39,6 +35,49 @@
 本项目是基于 Gin v1.6.3 的 Lin CMS 后端实现。
 
 官方团队产品了解请访问[TaleLin](https://github.com/TaleLin)
+
+## 安装使用
+
+- (1) 拉取源代码
+
+```
+git clone https://github.com/LazySkills/lin-cms-gin.git
+```
+
+- (2) 进入项目目录
+
+```
+cd 项目目录路径
+```
+
+- (3) 编辑数据库信息
+
+> 文件地址：**`internal/config/app.ini`**
+
+默认数据库配置
+```
+[database]
+Type = mysql
+# 用户名
+User = root
+# 密码
+Password = root
+# 这里配置数据库地址和短款
+Host = localhost:3306
+# 数据库名称
+Name = lin-cms
+Table_Prefix =
+```
+
+> **请按照自己的数据库配置相关信息**
+
+- (4) 运行项目
+
+> 这里会自行下载依赖，请自行百度go的国内源配置
+
+```
+go run main.go
+```
 
 
 ## 特别感谢
@@ -73,22 +112,3 @@
     ~~~
 
 - [ ] json 输出格式化
-
-
-## token
-
-- 5
-```json5
-{
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAyNDIyNDgsImlkZW50aXR5IjoxLCJzY29wZSI6ImxpbiIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MDAyMzg2NDh9.VilRX8CT-J4PL1cC_j5sOnz95HBdXvoIbAyNTVF5pWs",
-    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDI4MzA2NDgsImlkZW50aXR5IjoxLCJzY29wZSI6ImxpbiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjAwMjM4NjQ4fQ.Cpg4F-UVrynmoSb0ATs--YZtCLGPHu4z-kgOIdg9EGk"
-}
-```
-
-- 6
-```json5
-{
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVJZCI6MSwiZXhwIjoxNjAwMjQ5NTU0LCJpc3MiOiJnaW4tYmxvZyJ9.bk-u2m-DrnFZdm_P14aMHsiTmPenOe9P9zPRAONvLuk",
-    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVJZCI6MSwiZXhwIjoxNjAyODMwNzU0LCJpc3MiOiJnaW4tYmxvZyJ9.l6Q7dZJJpRkaHMWPDZkgkO4pWsaqISSF7Fm3YzscLEk"
-}
-```
